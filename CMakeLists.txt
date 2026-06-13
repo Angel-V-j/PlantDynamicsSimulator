@@ -11,4 +11,11 @@ add_executable(PlantDynamicsSimulator main.cpp
         weather/Time.cpp
         weather/Time.h
         weather/Climate.cpp
-        weather/Climate.h)
+        weather/Climate.h
+        service/FileWriter.cpp
+        service/FileWriter.h
+        service/FileReader.cpp
+        service/FileReader.h
+        manager/Simulator.cpp
+        manager/Simulator.h
+)

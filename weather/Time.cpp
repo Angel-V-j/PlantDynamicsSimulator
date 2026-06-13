@@ -1,5 +1,7 @@
 #include "Time.h"
 
+#include <sstream>
+
 #include "Climate.h"
 
 Time::Time() {
@@ -7,18 +9,24 @@ Time::Time() {
     hour = 0;
 }
 
-void Time::update(Weather & weather, Climate & climate, const ChaosGenerator & chaos) {
+std::string Time::update(Weather & weather, Climate & climate, ChaosGenerator & chaosGen) {
+    std::ostringstream oss;
     for (int i = 0; i < 24; i++) {
+        double chaos = chaosGen.next();
         for (int j = 0; j < 60; j++) {
             weather.update(chaos);
             climate.update(weather, hour);
         }
 
+        oss << getDay() << ", " << getHour() << ", " << chaos << ", " << std::endl;
+        oss << weather.toString() << ", " << std::endl;
+        oss << climate.toString() << ", " << std::endl;
         hour++;
     }
 
     hour = 0;
     days++;
+    return oss.str();
 }
 
 bool Time::isDay() const {
@@ -35,4 +43,3 @@ int Time::getDay() const {
 short Time::getHour() const {
     return this->hour;
 }
-

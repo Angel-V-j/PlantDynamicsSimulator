@@ -15,7 +15,7 @@ class Time {
         int getDay() const;
         short getHour() const;
 
-        void update(Weather &weather, Climate &climate, const ChaosGenerator &chaos);
+        std::string update(Weather &weather, Climate &climate, ChaosGenerator &chaosGen);
         bool isDay() const;
 };
 

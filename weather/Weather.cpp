@@ -1,6 +1,7 @@
 #include "Weather.h"
 
 #include <algorithm>
+#include <sstream>
 
 Weather::Weather(double cloudiness, double wind) {
     this->cloudiness = cloudiness;
@@ -12,8 +13,7 @@ Weather::Weather(double cloudiness, double wind) {
     this->isRaining = false;
 }
 
-void Weather::update(const ChaosGenerator & chaosGenerator) {
-    const double chaos = chaosGenerator.next();
+void Weather::update(double chaos) {
     updateTarget(cloudinessTarget,chaos, 20);
     updateTarget(wind,chaos, 25);
     updateTarget(rainChance,chaos, 15);
@@ -80,6 +80,16 @@ bool Weather::getIsRaining() const {
     return isRaining;
 }
 
+std::string Weather::toString() const {
+    std::ostringstream oss;
+    oss << "Weather: Cloudiness: " << cloudiness
+        << ", CloudinessTarget: "<< cloudinessTarget
+        << ", Wind: " << wind
+        << ", WindTarget: "<< windTarget
+        << ", Rain: " << rainChance
+        << ", RainIntensity: " << rainIntensity;
+    return oss.str();
+}
 // void Weather::updateCloudinessTarget(const double chaos, const float multiplayer) {
 //     this ->cloudinessTarget += (chaos - 0.5) * multiplayer;
 //     this->cloudinessTarget = putIntoBoundaries(cloudinessTarget);

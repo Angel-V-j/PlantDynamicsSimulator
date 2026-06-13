@@ -28,6 +28,8 @@ class Climate {
         double getHumidity() const;
         double getSoilHumidity() const;
         double getLight() const;
+
+        std::string toString() const;
 };
 
 

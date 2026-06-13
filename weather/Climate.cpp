@@ -1,6 +1,7 @@
 #include "Climate.h"
 
 #include <algorithm>
+#include <sstream>
 
 Climate::Climate() {
     temperature = 18;
@@ -74,6 +75,11 @@ double Climate::getTemperature() const {
     return temperature;
 }
 
+double Climate::getTemperatureTarget() const {
+    return temperatureTarget;
+}
+
+
 double Climate::getHumidity() const {
     return humidity;
 }
@@ -84,4 +90,14 @@ double Climate::getSoilHumidity() const {
 
 double Climate::getLight() const {
     return light;
+}
+
+std::string Climate::toString() const {
+    std::ostringstream oss;
+    oss << "Climate: Temperature: " << getTemperature()
+        << ", Temperature Target: " << getTemperatureTarget()
+        << ", Humidity: " << getHumidity()
+        << ", Soil-Humidity: " << getSoilHumidity()
+        << ", Light-Intensity: " << getLight();
+    return oss.str();
 }

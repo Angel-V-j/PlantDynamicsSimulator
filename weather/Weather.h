@@ -1,5 +1,6 @@
 #ifndef PLANTDYNAMICSSIMULATOR_WEATHER_H
 #define PLANTDYNAMICSSIMULATOR_WEATHER_H
+#include <string>
 #include "../chaos/ChaosGenerator.h"
 
 class Weather {
@@ -26,7 +27,7 @@ class Weather {
     public:
         Weather(double cloudiness, double wind);
 
-        void update(const ChaosGenerator & chaosGenerator);
+        void update(double chaos);
 
         double getCloudiness() const;
         double getCloudinessTarget() const;
@@ -35,6 +36,8 @@ class Weather {
         double getRainChance() const;
         double getRainIntensity() const;
         bool getIsRaining() const;
+
+        std::string toString() const;
 
         ~Weather() = default;
 };

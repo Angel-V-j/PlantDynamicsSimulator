@@ -32,6 +32,8 @@ float ChaosGenerator::getLimitExponent() const {
     return this->limitExponent;
 }
 
-double ChaosGenerator::next() const {
-    return rate * std::pow(startValue, growthExponent) * (1 - std::pow(startValue, limitExponent)); // return r*x^p(1-x^q)
+double ChaosGenerator::next() {
+    this->startValue = rate * std::pow(startValue, growthExponent)
+    * (1 - std::pow(startValue, limitExponent)); // return r*x^p(1-x^q)
+    return startValue;
 }

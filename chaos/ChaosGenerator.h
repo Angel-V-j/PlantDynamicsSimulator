@@ -14,7 +14,7 @@ class ChaosGenerator {
         double getStartValue() const;
         float getGrowthExponent() const;
         float getLimitExponent() const;
-        double next() const;
+        double next();
 
         ~ChaosGenerator() = default;
 };
