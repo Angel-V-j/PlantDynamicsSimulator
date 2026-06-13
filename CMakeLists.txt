@@ -6,7 +6,9 @@ set(CMAKE_CXX_STANDARD 20)
 add_executable(PlantDynamicsSimulator main.cpp
         chaos/ChaosGenerator.cpp
         chaos/ChaosGenerator.h
-        weather/WeatherSystem.cpp
-        weather/WeatherSystem.h
-        weather/TimeSystem.cpp
-        weather/TimeSystem.h)
+        weather/Weather.cpp
+        weather/Weather.h
+        weather/Time.cpp
+        weather/Time.h
+        weather/Climate.cpp
+        weather/Climate.h)

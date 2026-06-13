@@ -1,11 +1,9 @@
-#ifndef PLANTDYNAMICSSIMULATOR_WEATHERSYSTEM_H
-#define PLANTDYNAMICSSIMULATOR_WEATHERSYSTEM_H
+#ifndef PLANTDYNAMICSSIMULATOR_WEATHER_H
+#define PLANTDYNAMICSSIMULATOR_WEATHER_H
 #include "../chaos/ChaosGenerator.h"
 
-class WeatherSystem {
+class Weather {
     private:
-        ChaosGenerator *chaosGenerator;
-
         double cloudiness;
         double cloudinessTarget;
 
@@ -18,16 +16,19 @@ class WeatherSystem {
 
         void tick(const double & chaos);
         void moveToTarget(const double &target, double &currentValue, double speed);
-        void updateCloudinessTarget(double chaos, float multiplayer);
-        void updateWindTarget(double chaos, float multiplayer);
-        void updateRainChance(double chaos, float multiplayer);
-        void updateRainIntensity(double chaos, float multiplayer);
+        // void updateCloudinessTarget(double chaos, float multiplier);
+        // void updateWindTarget(double chaos, float multiplier);
+        // void updateRainChance(double chaos, float multiplier);
+        // void updateRainIntensity(double chaos, float multiplier);
         void updateRainState(double chaos);
-    public:
-        WeatherSystem();
-        WeatherSystem(double cloudiness, double wind);
 
-        void update();
+        void updateTarget(double& target, double chaos, double multiplier);
+        double putIntoBoundaries(double value);
+
+    public:
+        Weather(double cloudiness, double wind);
+
+        void update(const ChaosGenerator & chaosGenerator);
 
         double getCloudiness() const;
         double getCloudinessTarget() const;
@@ -37,8 +38,8 @@ class WeatherSystem {
         double getRainIntensity() const;
         bool getIsRaining() const;
 
-        ~WeatherSystem() = default;
+        ~Weather() = default;
 };
 
 
-#endif //PLANTDYNAMICSSIMULATOR_WEATHERSYSTEM_H
+#endif //PLANTDYNAMICSSIMULATOR_WEATHER_H
