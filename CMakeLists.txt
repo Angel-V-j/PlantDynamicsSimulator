@@ -7,4 +7,6 @@ add_executable(PlantDynamicsSimulator main.cpp
         chaos/ChaosGenerator.cpp
         chaos/ChaosGenerator.h
         weather/WeatherSystem.cpp
-        weather/WeatherSystem.h)
+        weather/WeatherSystem.h
+        weather/TimeSystem.cpp
+        weather/TimeSystem.h)

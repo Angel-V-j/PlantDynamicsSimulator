@@ -1,9 +1,11 @@
 #include "WeatherSystem.h"
 
 WeatherSystem::WeatherSystem() {
+    chaosGenerator = new ChaosGenerator(3.76907,0.3);
 }
 
 WeatherSystem::WeatherSystem(double cloudiness, double wind) {
+    chaosGenerator = new ChaosGenerator(3.76907,0.3);
     this->cloudiness = cloudiness;
     this->cloudinessTarget = cloudiness;
     this->wind = wind;
@@ -13,21 +15,20 @@ WeatherSystem::WeatherSystem(double cloudiness, double wind) {
     this->isRaining = false;
 }
 
-void WeatherSystem::update(const double & chaos) {
+void WeatherSystem::update() {
+    const double chaos = chaosGenerator->next();
     updateCloudinessTarget(chaos, 20);
     updateWindTarget(chaos, 25);
     updateRainChance(chaos, 15);
     updateRainState(chaos);
-    updateRainIntensity(chaos);
+    updateRainIntensity(chaos, 10);
+    tick(chaos);
 }
 
-void WeatherSystem::tick(const double & delta, const double & chaos) {
-
-
+void WeatherSystem::tick(const double & chaos) {
     for (int i = 0; i < 60; i++) {
-        moveToTarget(cloudinessTarget, this->cloudiness, delta);
-        moveToTarget(windTarget, this->wind, delta);
-
+        moveToTarget(cloudinessTarget, this->cloudiness, chaos);
+        moveToTarget(windTarget, this->wind, chaos);
     }
 }
 
@@ -66,12 +67,20 @@ bool WeatherSystem::getIsRaining() const {
 void WeatherSystem::updateCloudinessTarget(const double chaos, const float multiplayer) {
     this ->cloudinessTarget += (chaos - 0.5) * multiplayer;
 }
+
 void WeatherSystem::updateWindTarget(const double chaos, const float multiplayer) {
     this->windTarget += (chaos - 0.5) * multiplayer;
 }
+
 void WeatherSystem::updateRainChance(const double chaos, const float multiplayer) {
     this->windTarget += (chaos - 0.5) * multiplayer;
 }
+
+void WeatherSystem::updateRainIntensity(const double chaos, const float multiplayer) {
+    if (this->isRaining)
+        this->rainIntensity += (chaos - 0.5) * multiplayer;
+}
+
 void WeatherSystem::updateRainState(const double chaos) {
     if (cloudiness < 50 && chaos < 0.5)
         this->isRaining = false;
