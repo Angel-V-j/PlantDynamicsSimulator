@@ -1,5 +1,7 @@
 #include "Weather.h"
 
+#include <algorithm>
+
 Weather::Weather(double cloudiness, double wind) {
     this->cloudiness = cloudiness;
     this->cloudinessTarget = cloudiness;
@@ -27,7 +29,7 @@ void Weather::update(const ChaosGenerator & chaosGenerator) {
     tick(chaos);
 }
 
-void Weather::tick(const double & chaos) {
+void Weather::tick(const double chaos) {
     for (int i = 0; i < 60; i++) {
         moveToTarget(cloudinessTarget, this->cloudiness, chaos);
         moveToTarget(windTarget, this->wind, chaos);
@@ -36,6 +38,18 @@ void Weather::tick(const double & chaos) {
 
 void Weather::moveToTarget(const double & target, double & currentValue, const double speed) {
     currentValue += (target - currentValue) * speed;
+}
+
+void Weather::updateRainState(const double chaos) {
+    if (cloudiness < 50 && chaos < 0.5)
+        this->isRaining = false;
+    else
+        this->isRaining = true;
+}
+
+void Weather::updateTarget(double& target, double chaos, double multiplier) {
+    target += (chaos - 0.5) * multiplier;
+    target = std::clamp(target, 0.0, 100.0);
 }
 
 double Weather::getCloudiness() const {
@@ -84,22 +98,3 @@ bool Weather::getIsRaining() const {
 //         this->rainIntensity += (chaos - 0.5) * multiplier;
 // }
 //
-void Weather::updateRainState(const double chaos) {
-    if (cloudiness < 50 && chaos < 0.5)
-        this->isRaining = false;
-    else
-        this->isRaining = true;
-}
-
-double Weather::putIntoBoundaries(const double value) {
-    if (value > 100)
-        return 100.0;
-    if (value < 0.0)
-        return 0.0;
-    return value;
-}
-
-void Weather::updateTarget(double& target, double chaos, double multiplier) {
-    target = (chaos - 0.5) * multiplier;
-    target = putIntoBoundaries(target);
-}

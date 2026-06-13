@@ -14,16 +14,14 @@ class Weather {
         double rainIntensity;
         bool isRaining;
 
-        void tick(const double & chaos);
-        void moveToTarget(const double &target, double &currentValue, double speed);
+        void tick(double chaos);
+        void moveToTarget(const double &target, double &currentValue, double chaos);
         // void updateCloudinessTarget(double chaos, float multiplier);
         // void updateWindTarget(double chaos, float multiplier);
         // void updateRainChance(double chaos, float multiplier);
         // void updateRainIntensity(double chaos, float multiplier);
         void updateRainState(double chaos);
-
         void updateTarget(double& target, double chaos, double multiplier);
-        double putIntoBoundaries(double value);
 
     public:
         Weather(double cloudiness, double wind);
